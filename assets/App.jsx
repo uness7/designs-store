@@ -1,9 +1,10 @@
 import {createRoot} from "react-dom/client";
 import './styles.css';
+import Home from "./Pages/Home";
 const App = () => {
     return (
-        <div className="text-6xl text-center">
-            <h1 className="font-bold underline">from app.jsx</h1>
+        <div>
+            <Home />
         </div>
     );
 };
