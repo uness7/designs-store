@@ -1,6 +1,7 @@
 import {BsFillCartCheckFill,  BsFillBookmarkHeartFill} from 'react-icons/all'
 import searchBar from "./SearchBar";
 import SearchBar from "./SearchBar";
+import {Link} from "react-router-dom";
 
 
 const Navbar = () => {
@@ -8,7 +9,7 @@ const Navbar = () => {
             <div className="p-4 text-lg text-center flex flex-row justify-between border-b-2 border-slate-100">
             <div className="w-2/3 flex flex-row justify-start space-x-4">
                 <h2 className="ml-4 mt-2 text-2xl">
-                    <a className="font-bold">DesignsY</a>
+                    <Link to='/' className="font-bold">DesignsY</Link>
                 </h2>
                 <SearchBar />
             </div>
@@ -20,8 +21,8 @@ const Navbar = () => {
                     <BsFillBookmarkHeartFill />
                 </a>
                 <a>Sell your art</a>
-                <a className="mr-4">Login</a>
-                <a className="mr-4">Signup</a>
+                <a href="/login" className="mr-4">Login</a>
+                <a href="/signup" className="mr-4">Signup</a>
             </div>
         </div>
     );

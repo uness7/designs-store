@@ -10,12 +10,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LandingPageController extends AbstractController
 {
-    #[Route('/', name: 'app_landing_page', methods: ['GET', 'POST'])]
+//    #[Route('/{reactRoute}', name: 'default', defaults: ['reactRoute'=> null], methods: ['GET', 'POST'])]
+    #[Route('/{reactRoute}', name: 'default', defaults: ['reactRoute'=> null], methods: ['GET'])]
     public function index() : Response
     {
-        $name = 'younes';
-        return $this->render(
-            'index.html');
+        return $this->render('index.html');
     }
 
     #[Route('/api/data', name: 'api_data', methods: ['GET'])]
