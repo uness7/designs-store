@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UploadDesignController extends AbstractController
 {
-    #[Route('/user/dashboard/upload-design',
+    #[Route('/user/dashboard/upload-deswign',
         name: 'app_upload_design'
     )]
     public function uploadDesign() : Response

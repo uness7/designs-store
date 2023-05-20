@@ -16,7 +16,6 @@ class LoginController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-
         return $this->json([
             'controller_name' => 'LoginController',
             'last_username' => $lastUsername,

@@ -5,13 +5,14 @@ namespace App\Controller;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController
 {
-    #[Route('/user/dashboard', name: 'app_user')]
-    public function index(EntityManagerInterface $entityManager): Response
+    #[Route('/api/dashboard', name: 'app_user')]
+    public function index(EntityManagerInterface $entityManager): JsonResponse
     {
         $user = $this->getUser()->getUserIdentifier();
 
@@ -20,8 +21,7 @@ class DashboardController extends AbstractController
             ->findOneBy(['email' => $user])
         ;
 
-        return $this->render('DashboardPage/dashboard.html.twig',
-        [
+        return $this->json([
             'user' => $userInfo
         ]);
     }
