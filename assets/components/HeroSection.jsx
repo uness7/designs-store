@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 const HeroSection = () => {
 
     const [data, setData] = useState(null);
+    // const [first, setFirst] = useState(null);
+    // const [second, setSecond] = useState(null);
 
     useEffect(()=>{
         fetchData();
@@ -10,22 +12,25 @@ const HeroSection = () => {
 
     async function fetchData() {
         try {
-            const res = await fetch('/api/data');
-            const data = await res.json();
-            setData(res);
-            console.log(data);
-        } catch (e) {
-            console.log(e);
+            const response = await fetch('/api/data'); // Assuming the Symfony endpoint is '/api/data'
+            const jsonData = await response.json();
+            setData(jsonData);
+        } catch (error) {
+            console.error('Error fetching data:', error);
         }
     }
 
     return (
-        <section className="w-screen h-96 bg-cyan-900 text-center">
-            <h2>i'm hero section</h2>
-            <p>{data.map((element)=>{
-                element?.name
-            })}</p>
-        </section>
+        <div className="text-center h-96 flex flex-col justify-center">
+            <h2>Data Example</h2>
+            {data && (
+                <ul>
+                    <li>Name: {data.name}</li>
+                    <li>Age: {data.age}</li>
+                    <li>Email: {data.email}</li>
+                </ul>
+            )}
+        </div>
     );
 }
 

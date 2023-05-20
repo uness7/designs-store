@@ -21,11 +21,12 @@ class LandingPageController extends AbstractController
     #[Route('/api/data', name: 'api_data', methods: ['GET'])]
     public function apiData(): JsonResponse
     {
-        $elements = [
-            'name' => 'younes',
-            'last' => 'zioual'
+        $data = [
+            'name' => 'John Doe',
+            'age' => 30,
+            'email' => 'johndoe@example.com'
         ];
 
-        return new JsonResponse($elements);
+        return $this->json($data);
     }
 }
