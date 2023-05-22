@@ -3,9 +3,11 @@
 namespace App\Security;
 
 use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -31,6 +33,7 @@ class LoginAuthenticator extends  AbstractLoginFormAuthenticator
     }
     public function authenticate(Request $request): Passport
     {
+
         $email = $request->request->get('email');
         $password = $request->request->get('password');
 
@@ -52,29 +55,19 @@ class LoginAuthenticator extends  AbstractLoginFormAuthenticator
         );
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): JsonResponse
     {
 
         $user = $token->getUser()->getRoles();
-
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
+            $redirectUrl = $targetPath;
+        } elseif (in_array('ROLE_USER', $user, true)) {
+            $redirectUrl = $this->router->generate('app_user');
+        } else {
+            $redirectUrl = $this->router->generate('app_landing_page');
         }
-
-        if (in_array('ROLE_USER', $user, true)) {
-            return new RedirectResponse(
-                $this->router->generate('app_user')
-            );
-        }
-//        if (in_array('ROLE_ADMIN', $user, true)) {
-//            return new RedirectResponse(
-//                $this->router->generate('app_admin')
-//            );
-//        }
-
-        return new RedirectResponse(
-            $this->router->generate('app_landing_page')
-        );
+        return new JsonResponse(['url' => $redirectUrl]);
     }
 
     protected function getLoginUrl(Request $request): string

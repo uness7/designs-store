@@ -11,18 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController
 {
-    #[Route('/api/dashboard', name: 'app_user')]
+    #[Route('/dashboard', name: 'app_user')]
     public function index(EntityManagerInterface $entityManager): JsonResponse
     {
         $user = $this->getUser()->getUserIdentifier();
-
         $userInfo = $entityManager
             ->getRepository(User::class)
             ->findOneBy(['email' => $user])
         ;
-
-        return $this->json([
-            'user' => $userInfo
-        ]);
+        return $this->json(['user' => $userInfo]);
     }
 }
