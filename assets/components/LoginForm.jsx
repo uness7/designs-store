@@ -37,7 +37,7 @@ const LoginForm = () => {
                     .then((res) => res.json())
                     .then(data => {
                         // console.log(data.user.roles[0])
-                        setUserContext(data.user.roles[0]);
+                        setUserContext(data.user.roles[0]);                        
                     });
                } catch (error) {
                     console.log(error);
@@ -47,8 +47,7 @@ const LoginForm = () => {
         }
         
     }, [isSubmited]);
-   
-
+    
     
 
     const save = async (e) => {

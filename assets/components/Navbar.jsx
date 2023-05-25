@@ -1,12 +1,12 @@
 import {BsFillCartCheckFill,  BsFillBookmarkHeartFill} from 'react-icons/all'
 import SearchBar from "./SearchBar";
 import {Link} from "react-router-dom";
-// import { useContext } from 'react';
-// import UserContext from '../Context/UserContext';
+import { useContext } from 'react';
+import UserContext from '../Context/UserContext';
 
 
-const Navbar = (user) => {
-    // const [user] = useContext(UserContext);
+const Navbar = () => {
+    const [user] = useContext(UserContext);
     
 
     return (
