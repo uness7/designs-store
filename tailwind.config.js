@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// const url = require("url");
 module.exports = {
   mode: 'jit',
   content: [
@@ -6,7 +7,11 @@ module.exports = {
       "./templates/**/*.html",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "bg-headerImage": "url('./assets/Images/img-1.jpg')",
+      }
+    },
   },
   plugins: [],
 }

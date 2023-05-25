@@ -7,6 +7,7 @@ const LoginForm = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
 
     const [csrfToken, setCsrfToken] = useState('');
     const [url, setUrl] = useState('');
@@ -16,6 +17,7 @@ const LoginForm = () => {
             .then(res => res.json())
             .then(data => {
                 setCsrfToken(data.csrfToken.value);
+                setError(data.messageKey);
             });
     }, []);
 
@@ -79,6 +81,17 @@ const LoginForm = () => {
                     <button type="submit" className="bg-cyan-900 px-4 py-2 text-white">Create Account</button>
                 </div>
             </form>
+            {
+                error!==null
+                ?
+                (
+                    <div>
+                        <h2>{error}</h2>
+                    </div>
+                )
+                :
+                null
+            }
         </div>
     );
 }

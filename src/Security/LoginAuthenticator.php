@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -25,11 +26,13 @@ class LoginAuthenticator extends  AbstractLoginFormAuthenticator
 
     private UserRepository $userRepository;
     private RouterInterface $router;
+    private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(UserRepository $userRepository, RouterInterface $router)
+    public function __construct(UserRepository $userRepository, RouterInterface $router, UrlGeneratorInterface $urlGenerator)
     {
         $this->userRepository = $userRepository;
         $this->router = $router;
+        $this->urlGenerator = $urlGenerator;
     }
     public function authenticate(Request $request): Passport
     {
@@ -63,9 +66,9 @@ class LoginAuthenticator extends  AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             $redirectUrl = $targetPath;
         } elseif (in_array('ROLE_USER', $user, true)) {
-            $redirectUrl = $this->router->generate('app_user');
+            $redirectUrl = '/dashboard';
         } else {
-            $redirectUrl = $this->router->generate('app_landing_page');
+            $redirectUrl = '/';
         }
         return new JsonResponse(['url' => $redirectUrl]);
     }
