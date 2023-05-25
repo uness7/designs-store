@@ -1,6 +1,9 @@
 
 import {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from 'react';
+import UserContext from '../Context/UserContext'
+import ErrorLoginPage from "./ErrorLoginPage";
 
 const LoginForm = () => {
 
@@ -11,15 +14,42 @@ const LoginForm = () => {
 
     const [csrfToken, setCsrfToken] = useState('');
     const [url, setUrl] = useState('');
+    const [isSubmited, setIsSubmitted] = useState(false);
+    
+
+    // eslint-disable-next-line no-unused-vars
+    const [_, setUserContext] = useContext(UserContext);
 
     useEffect(()=>{
         fetch('/api/login')
             .then(res => res.json())
             .then(data => {
-                setCsrfToken(data.csrfToken.value);
-                setError(data.messageKey);
+                setCsrfToken(data.csrfToken.value);                
             });
     }, []);
+
+    
+    useEffect(()=>{
+        if(isSubmited) {
+            const fetchRole = () => {
+               try {
+                    fetch('/api/dashboard')
+                    .then((res) => res.json())
+                    .then(data => {
+                        // console.log(data.user.roles[0])
+                        setUserContext(data.user.roles[0]);
+                    });
+               } catch (error) {
+                    console.log(error);
+               }
+            }      
+            fetchRole();      
+        }
+        
+    }, [isSubmited]);
+   
+
+    
 
     const save = async (e) => {
         e.preventDefault();
@@ -35,6 +65,8 @@ const LoginForm = () => {
         });
         const data = await response.json();
         setUrl(data.url);
+        setError(data.error?.messageKey);      
+        setIsSubmitted(true);
     }
 
     useEffect(()=> {
@@ -45,7 +77,7 @@ const LoginForm = () => {
 
 
     return (
-        <div className="h-full flex justify-center items-center my-24">
+        <div className="h-full flex flex-col justify-center items-center my-24">
             <form
                 className="px-6 py-4 text-lg shadow-md rounded border-2 border-slate-300  w-2/4 h-full m-auto"
                 onSubmit={save}
@@ -78,20 +110,10 @@ const LoginForm = () => {
                     </label>
                 </div>
                 <div className="text-center">
-                    <button type="submit" className="bg-cyan-900 px-4 py-2 text-white">Create Account</button>
+                    <button type="submit" className="bg-cyan-900 px-4 py-2 text-white">Signin</button>
                 </div>
             </form>
-            {
-                error!==null
-                ?
-                (
-                    <div>
-                        <h2>{error}</h2>
-                    </div>
-                )
-                :
-                null
-            }
+            <ErrorLoginPage error={error} />           
         </div>
     );
 }
