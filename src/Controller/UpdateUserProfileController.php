@@ -11,15 +11,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RegistrationController extends AbstractController {
-
-    #[Route('/api/signup', name: 'app_register', methods: ['POST'])]
-    public function register(
-        UserPasswordHasherInterface $userPasswordHasher,
-        EntityManagerInterface $entityManager
-    ): JsonResponse
+class UpdateUserProfileController extends AbstractController
+{
+    #[Route('/api/dashboard/update-user-profile')]
+    public function updateUserProfile(
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $userPasswordHasher
+    ) : JsonResponse
     {
-        $user = new User();
+        $userEmail = $this->getUser()->getUserIdentifier();
+        $user = $entityManager
+            ->getRepository(User::class)
+            ->findOneBy(['email' => $userEmail])
+        ;
 
         $request = Request::createFromGlobals();
 
@@ -60,6 +64,7 @@ class RegistrationController extends AbstractController {
 
             return new JsonResponse(['message' => 'Registration successful'], Response::HTTP_OK);
         }
-        return new JsonResponse(['message' => 'Registration successful'], Response::HTTP_OK);
+
+        return $this->json(['message' => 'User is not authenticated']);
     }
 }

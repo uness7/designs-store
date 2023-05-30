@@ -43,7 +43,7 @@ import {useEffect, useState} from "react";
         formData.append('addressLineTwo', addressLineTwo);
         formData.append('password', password);
 
-        const res = await fetch('/signup', {
+        const res = await fetch('/api/signup', {
             method: 'POST',
             body: formData
         });

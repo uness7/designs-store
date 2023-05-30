@@ -8,22 +8,22 @@ const ProfileUpdatePage = () => {
     useEffect(()=>{
         const fetchRole = () => {
             try {
-                 fetch('/api/dashboard/update-user-profile')
-                 .then((res) => res.json())
-                 .then(data => {
-                     console.log(data)
-                     setData(data.user);
-                 });
+                fetch('/api/dashboard/user-profile')
+                    .then((res) => res.json())
+                    .then(data => {
+                        console.log(data)
+                        setData(data.user);
+                    });
             } catch (error) {
-                 console.log(error);
+                console.log(error);
             }
-         }      
-         fetchRole();    
+        }
+        fetchRole();
     }, []);
 
     return (<div>
         <div>
-            <h1>Profile Update Page</h1>
+            <h1>Profile Page</h1>
         </div>
     </div>);
 }

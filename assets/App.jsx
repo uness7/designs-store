@@ -13,29 +13,25 @@ import ProfileUpdatePage from "./Pages/ProfileUpdatePage";
 import SavedDesignsPage from "./Pages/SavedDesignsPage";
 
 import UserContext from "./Context/UserContext";
+import ProfilePage from "./Pages/ProfilePage";
 
 const App = () => {
-    const userContext = useState(null);
 
     return (
         <div>
             <BrowserRouter>
-                <UserContext.Provider value={userContext}>
-                    <Routes>
-                        <Route path="/signup" element={<SignupPage />} />
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/dashboard" element={<Dashboard />} />
-                        <Route
-                            path="/dashboard/update-profile"
-                            element={<ProfileUpdatePage />}
-                        />
-                        <Route path="/cart" element={<CartPage />} />
-                        <Route path="/saved" element={<SavedDesignsPage />} />
-                        <Route path="/logout" element={<LogoutPage />} />
-                        <Route path="/" element={<Home />} />
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
-                </UserContext.Provider>
+                <Routes>
+                    <Route path="/signup" element={<SignupPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/dashboard/update-user-profile" element={<ProfileUpdatePage />}/>
+                    <Route path="/dashboard/user-profile" element={<ProfilePage />}/>
+                    <Route path="/cart" element={<CartPage />} />
+                    <Route path="/saved" element={<SavedDesignsPage />} />
+                    <Route path="/logout" element={<LogoutPage />} />
+                    <Route path="/" element={<Home />} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
             </BrowserRouter>
         </div>
     );

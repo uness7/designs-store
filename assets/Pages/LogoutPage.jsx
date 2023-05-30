@@ -64,7 +64,7 @@ const LogoutPage = () => {
   }, [redirectUrl, navigate]);
 
   return (
-    <div className="top-1/2, left-1/2, -translate-x-1/2, -translate-y-1/2 text-2xl border-2 border-black w-96 h-full m-auto">
+    <div className="flex justify-center items-center text-2xl border-2 border-black w-96 h-full m-auto">
       <h1>You are logging out....</h1>
     </div>
   );
