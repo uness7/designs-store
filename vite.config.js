@@ -6,10 +6,7 @@ export default defineConfig({
     root: "./assets",
     base: "/assets/",
     postcss: {
-        plugins: [
-            require('tailwindcss'),
-            require('autoprefixer'),
-        ],
+        plugins: [require("tailwindcss"), require("autoprefixer")],
     },
     css: {
         modules: true, // Enable CSS modules (optional)

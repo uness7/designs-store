@@ -14,11 +14,24 @@ class DashboardController extends AbstractController
     #[Route('/api/dashboard', name: 'app_user')]
     public function index(EntityManagerInterface $entityManager): JsonResponse
     {
-        $user = $this->getUser()->getUserIdentifier();
-        $userInfo = $entityManager
+        if($this->getUser()) {
+            $user = $this->getUser()->getUserIdentifier();
+            $userInfo = $entityManager
             ->getRepository(User::class)
-            ->findOneBy(['email' => $user])
-        ;
-        return $this->json(['user' => $userInfo]);
+            ->findOneBy(['email' => $user]);
+
+            return $this->json(
+                [
+                    'user' => $userInfo, 
+                    'isAuth' => $this->isGranted('ROLE_USER'),
+                ]
+            );
+        }
+
+        return $this->json(
+            [                
+                'isAuth' => $this->isGranted('ROLE_USER'),
+            ]
+        );
     }
 }

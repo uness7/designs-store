@@ -1,9 +1,11 @@
+import Navbar from "../components/Navbar";
+
 const SavedDesignsPage = () => {
     return (
         <div>
-            <h2>hello saved ones</h2>
+            <Navbar />
         </div>
-    )
-}
+    );
+};
 
 export default SavedDesignsPage;
