@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,16 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController {
 
-    #[Route('/api/signup', name: 'app_register', methods: ['POST'])]
+    #[Route('/api/signup', name: 'app_register', methods: ['POST', 'GET'])]
     public function register(
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager
     ): JsonResponse
     {
         $user = new User();
-
         $request = Request::createFromGlobals();
-
         $firstName = $request->request->get('firstName');
         $lastName = $request->request->get('lastName');
         $email = $request->request->get('email');
@@ -40,8 +39,8 @@ class RegistrationController extends AbstractController {
             $user->setCity($city);
             $user->setCountry($country);
             $user->setPhoneNumber($phoneNumber);
-            $user->setCreatedAt(new \DateTimeImmutable());
-            $user->setUpdatedAt(new \DateTimeImmutable());
+            $user->setCreatedAt(new DateTimeImmutable());
+            $user->setUpdatedAt(new DateTimeImmutable());
             $user->setRoles('ROLE_USER');
 
             if (!empty($request->request->get('addressLineTwo'))) {
@@ -60,6 +59,6 @@ class RegistrationController extends AbstractController {
 
             return new JsonResponse(['message' => 'Registration successful'], Response::HTTP_OK);
         }
-        return new JsonResponse(['message' => 'Registration successful'], Response::HTTP_OK);
+        return new JsonResponse(['message' => 'Registration failed :( '], Response::HTTP_OK);
     }
 }

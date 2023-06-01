@@ -1,10 +1,12 @@
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from 'zod';
 import {useForm} from "react-hook-form";
-import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 
-    const SignupForm = () => {
+const SignupForm = () => {
+
+        const navigate = useNavigate();
 
         const countries = [
             'Morocco',
@@ -48,8 +50,12 @@ import {useEffect, useState} from "react";
             body: formData
         });
 
-        if (res.ok)
-            console.log('ok');
+        if (res.ok) {
+            navigate('/login');
+        }else{
+            navigate('/');
+        }
+
     }
 
 
