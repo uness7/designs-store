@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client";
-import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./styles.css";
 import Home from "./Pages/Home";
@@ -11,8 +10,6 @@ import LogoutPage from "./Pages/LogoutPage";
 import CartPage from "./Pages/CartPage";
 import ProfileUpdatePage from "./Pages/ProfileUpdatePage";
 import SavedDesignsPage from "./Pages/SavedDesignsPage";
-
-import UserContext from "./Context/UserContext";
 import ProfilePage from "./Pages/ProfilePage";
 
 const App = () => {
